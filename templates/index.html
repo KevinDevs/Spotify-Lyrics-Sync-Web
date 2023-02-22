@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js"></script>
 	<style>
 		body {
 			font-family: 'Roboto', sans-serif;
@@ -21,7 +22,6 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			height: 100vh;
 			padding: 20px;
 		}
 
@@ -34,8 +34,8 @@
 		}
 
 		.album-cover {
-			width: 300px;
-			height: 300px;
+			width: 200px;
+			height: 200px;
 			border-radius: 50%;
 			margin: 0 auto;
 			display: block;
@@ -49,7 +49,7 @@
 	        border-radius: 10px;
 	        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 	        text-align: center;
-	        height: 400px;
+	        /*height: 400px;*/
 	        overflow: auto;
 	    }
 	
@@ -67,6 +67,23 @@
 			margin-top: 10px;
 			text-align: right;
 		}
+		.image {
+		    -webkit-animation:spin 4s linear infinite;
+		    -moz-animation:spin 4s linear infinite;
+		    animation:spin 4s linear infinite;
+		}
+		@-moz-keyframes spin { 
+		    100% { -moz-transform: rotate(360deg); } 
+		}
+		@-webkit-keyframes spin { 
+		    100% { -webkit-transform: rotate(360deg); } 
+		}
+		@keyframes spin { 
+		    100% { 
+		        -webkit-transform: rotate(360deg); 
+		        transform:rotate(360deg); 
+		    } 
+		}
 	</style>
 	<script>
 		var currentTrackName = '';
@@ -78,24 +95,30 @@
                 $('#track_name').text(data.track_name);
                 $('#artist_name').text(data.artist);
                 $('#album_cover').attr('src', data.album_cover_url);
-		let match = data.lyrics.split('\n');
-		let stringWithPhrase = match.slice(1).join('\n');
-		$('#lyrics').html(stringWithPhrase);
+                let match = data.lyrics.split('\n');
+				let stringWithPhrase = match.slice(1).join('\n');
+				$('#lyrics').html(stringWithPhrase);
             }
         });
     }
 
 		$(function() {
 			updateSongData();
-			setInterval(updateSongData, 500);
+			setInterval(updateSongData, 1000);
 		});
+		
+	//dark reader
+	DarkReader.auto({
+	    brightness: 100,
+	    contrast: 100
+	});
 	</script>
 </head>
 <body>
 	<div class="container">
+		<img id="album_cover" class="album-cover image" /><br/>
 		<h2 id="track_name" style=" margin: 0; "></h2>
 		<h3 id="artist_name"></h3>
-		<img id="album_cover" class="album-cover" />
 		<div class="lyrics-container">
 			<pre id="lyrics"></pre>
 		</div>
