@@ -8,3 +8,5 @@ Usage:
 4. python app.py
 5. Visit localhost:3000
 
+Screenshot:
+![Screenshot](Screenshot.jpg)
