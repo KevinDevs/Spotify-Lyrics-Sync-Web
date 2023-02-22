@@ -78,11 +78,10 @@
                 $('#track_name').text(data.track_name);
                 $('#artist_name').text(data.artist);
                 $('#album_cover').attr('src', data.album_cover_url);
+		let match = data.lyrics.split('\n');
+		let stringWithPhrase = match.slice(1).join('\n');
+		$('#lyrics').html(stringWithPhrase);
             }
-            
-			let match = data.lyrics.split('\n');
-			let stringWithPhrase = match.slice(1).join('\n');
-            $('#lyrics').html(stringWithPhrase);
         });
     }
 
