@@ -10,7 +10,7 @@ import re
 app = Flask(__name__)
 
 
-#Spotify API
+
 client_id = 'ENTER_YOUR_CLIENT_ID'
 client_secret = 'ENTER_YOUR_CLIENT_SECRET'
 redirect_uri = 'http://localhost:3000'
@@ -28,14 +28,11 @@ if not sp_oauth.get_cached_token():
 else:
     access_token = sp_oauth.get_access_token()['access_token']
 
-sp = spotipy.Spotify(auth=access_token)
 
 
 # Set up Genius API client
-genius = lyricsgenius.Genius("ENTER YOUR GENIUS API KEY")
-genius.verbose = False
-genius.remove_section_headers = True
-genius.skip_non_songs = False
+genius = lyricsgenius.Genius("ENTER_YOUR_GENIUS_API_KEY")
+genius.skip_non_songs = True
 
 @app.route("/")
 def index():
@@ -54,6 +51,9 @@ else:
 # Define a route for the song data API
 @app.route("/api/song_data")
 def song_data():
+    sp_oauth = SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope, cache_path='.spotifycache')
+    access_token = sp_oauth.get_access_token()['access_token']
+    sp = spotipy.Spotify(auth=access_token)
     # Get the user's currently playing track from Spotify
     track_info = sp.current_playback()
     track_name = track_info['item']['name']
@@ -110,3 +110,4 @@ def default_album_cover():
 
 if __name__ == "__main__":
     app.run(port=3000)
+
