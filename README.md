@@ -10,3 +10,7 @@ Usage:
 
 Screenshot:
 ![Screenshot](Screenshot.jpg)
+
+Todo:
+- [ ] Rolling lyrics
+- [ ] PWA Support
